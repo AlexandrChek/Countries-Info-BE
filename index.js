@@ -9,6 +9,19 @@ const BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW
 const app = express()
 app.use(bodyParser.json())
 
+// Middleware for CORS
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', 'https://alexandrchek.github.io')
+    res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    next()
+})
+
+// OPTIONS handling
+app.options('*', (req, res) => {
+    res.status(200).send()
+})
+
 // 1. GET /api/countries
 app.get('/api/countries', async (req, res) => {
     try {
@@ -56,5 +69,5 @@ app.post('/api/country-info', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`Server started`)
+    console.log(`Server started on port ${PORT}`)
 })
