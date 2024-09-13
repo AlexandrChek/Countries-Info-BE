@@ -5,13 +5,17 @@ import bodyParser from 'body-parser'
 const PORT = process.env.PORT
 const BASE_URL_NAGER = process.env.BASE_URL_NAGER
 const BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW
+const allowedOrigins = ['https://alexandrchek.github.io', 'http://localhost:5173']
 
 const app = express()
 app.use(bodyParser.json())
 
 // Middleware for CORS
 app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', 'https://alexandrchek.github.io')
+    const origin = req.headers.origin
+    if (allowedOrigins.includes(origin)) {
+        res.set('Access-Control-Allow-Origin', origin)
+    }
     res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
     res.set('Access-Control-Allow-Headers', 'Content-Type')
     next()
