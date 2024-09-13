@@ -1,6 +1,7 @@
 import express from 'express'
 import fetch from 'node-fetch'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 const PORT = process.env.PORT
 const BASE_URL_NAGER = process.env.BASE_URL_NAGER
