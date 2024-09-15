@@ -30,33 +30,43 @@ app.get('/api/countries', async (req, res) => {
 // 2. POST /api/country-info
 app.post('/api/country-info', async (req, res) => {
     const { countryCode, name } = req.body
+    let result = {}
 
     try {
         const countryInfoResponse = await fetch(`${BASE_URL_NAGER}/CountryInfo/${countryCode}`)
-        const countryInfo = await countryInfoResponse.json()
-        const borders = countryInfo.borders
+        if (!countryInfoResponse.ok) {
+            result.borderCountries = []
+        } else {
+            const countryInfo = await countryInfoResponse.json()
+            result.borderCountries = countryInfo.borders
+        }
 
         const populationResponse = await fetch(`${BASE_URL_COUNTRIESNOW}/countries/population`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ country: name })
         })
-        const populationData = await populationResponse.json()
-        const populationCounts = populationData.data.populationCounts
+        if (!populationResponse.ok) {
+            result.population = []
+        } else {
+            const populationData = await populationResponse.json()
+            result.population = populationData.data.populationCounts
+        }
 
         const flagResponse = await fetch(`${BASE_URL_COUNTRIESNOW}/countries/flag/images`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ iso2: countryCode })
         })
-        const flagData = await flagResponse.json()
-        const flagUrl = flagData.data.flag
+        if (!flagResponse.ok) {
+            result.flag = ''
+        } else {
+            const flagData = await flagResponse.json()
+            result.flag = flagData.data.flag
+        }
 
-        res.json({
-            borderCountries: borders,
-            population: populationCounts,
-            flag: flagUrl
-        })
+        res.json(result)
+
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving country data', error: error.message })
     }
