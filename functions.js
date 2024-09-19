@@ -6,11 +6,12 @@ export function compareNames(a, b) {
   }
 }
 
-export function changeKeysInBorderCountries(borderCountries) {
-  return borderCountries.forEach((country, index) => {
+export function changeKeysInBorderCountries(borders) {
+  const borderCountries = borders.map((country) => {
     const { commonName, countryCode } = country;
-    borderCountries[index] = { name: commonName, countryCode };
+    return { name: commonName, countryCode };
   });
+  return borderCountries;
 }
 
 export function fixNamesMismatch(name) {
