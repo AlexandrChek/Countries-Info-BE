@@ -7,10 +7,11 @@ export function compareNames(a, b) {
 }
 
 export function changeKeysInBorderCountries(borders) {
-  const borderCountries = borders.map((country) => {
+  const borderCountries = borders.map(country => {
     const { commonName, countryCode } = country;
     return { name: commonName, countryCode };
   });
+  
   return borderCountries;
 }
 
@@ -27,11 +28,7 @@ export function fixNamesMismatch(name) {
     { name: 'Venezuela', correcpondingName: 'Venezuela, RB' },
   ];
 
-  const match = correcpondingNames.find((item) => item.name === name);
+  const match = correcpondingNames.find(item => item.name === name);
 
-  if (match) {
-    return match.correcpondingName;
-  } else {
-    return name;
-  }
+  return match ? match.correcpondingName : name;
 }

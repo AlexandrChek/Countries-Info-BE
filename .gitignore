@@ -1,5 +1,6 @@
 node_modules
 package-lock.json
+.prettierrc
 
 # Editor directories and files
 .vscode/*

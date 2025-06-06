@@ -1,6 +1,5 @@
 import express from 'express';
 import fetch from 'node-fetch';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import { compareNames, fixNamesMismatch, changeKeysInBorderCountries } from './functions.js';
 
@@ -9,8 +8,6 @@ const BASE_URL_NAGER = process.env.BASE_URL_NAGER;
 const BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW;
 
 const app = express();
-app.use(bodyParser.json());
-
 app.use(
   cors({
     origin: '*',
@@ -18,6 +15,7 @@ app.use(
     allowedHeaders: ['Content-Type'],
   }),
 );
+app.use(express.json());
 
 // 1. GET /api/countries
 app.get('/api/countries', async (req, res) => {
