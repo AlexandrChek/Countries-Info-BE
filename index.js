@@ -8,13 +8,8 @@ const BASE_URL_NAGER = process.env.BASE_URL_NAGER;
 const BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW;
 
 const app = express();
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type'],
-  }),
-);
+
+app.use(cors());
 app.use(express.json());
 
 // 1. GET /api/countries
