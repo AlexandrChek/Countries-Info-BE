@@ -1,11 +1,14 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import cors from 'cors';
-import { compareNames, fixNamesMismatch, changeKeysInBorderCountries } from './functions.js';
+import {
+  getEnvVariables,
+  compareNames,
+  fixNamesMismatch,
+  changeKeysInBorderCountries,
+} from './functions.js';
 
-const PORT = process.env.PORT;
-const BASE_URL_NAGER = process.env.BASE_URL_NAGER;
-const BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW;
+const { PORT, BASE_URL_NAGER, BASE_URL_COUNTRIESNOW } = getEnvVariables();
 
 const app = express();
 

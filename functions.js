@@ -1,3 +1,24 @@
+export function getEnvVariables() {
+  const PORT = process.env.PORT || 3000;
+  let BASE_URL_NAGER, BASE_URL_COUNTRIESNOW;
+
+  const setEnvValues = () => {
+    BASE_URL_NAGER = process.env.BASE_URL_NAGER;
+    BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW;
+  };
+
+  if (process.env.NODE_ENV === 'development') {
+    import('dotenv').then(dotenv => {
+      dotenv.config();
+      setEnvValues();
+    });
+  } else {
+    setEnvValues();
+  }
+
+  return { PORT, BASE_URL_NAGER, BASE_URL_COUNTRIESNOW };
+}
+
 export function compareNames(a, b) {
   if (a.name < b.name) {
     return -1;
@@ -11,7 +32,7 @@ export function changeKeysInBorderCountries(borders) {
     const { commonName, countryCode } = country;
     return { name: commonName, countryCode };
   });
-  
+
   return borderCountries;
 }
 

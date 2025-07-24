@@ -2,13 +2,14 @@
   "name": "countries-info-be",
   "version": "1.0.0",
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   },
   "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "startDev": "cross-env NODE_ENV=development node index.js",
     "format": "prettier --write ."
   },
   "author": "Alex",
@@ -19,6 +20,8 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^17.2.0",
     "prettier": "^3.3.3"
   }
 }
