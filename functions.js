@@ -1,55 +1,28 @@
-export function getEnvVariables() {
-  const PORT = process.env.PORT || 3000;
-  let BASE_URL_NAGER, BASE_URL_COUNTRIESNOW;
+// Fn for change keys 'commonName' to 'name' in the array of objects with border countries:
+export const changeKeysInBorderCountries = borderCountries => {
+  const fixedBorderCountries = borderCountries.map(({ commonName, countryCode }) => ({
+    name: commonName,
+    countryCode,
+  }));
 
-  const setEnvValues = () => {
-    BASE_URL_NAGER = process.env.BASE_URL_NAGER;
-    BASE_URL_COUNTRIESNOW = process.env.BASE_URL_COUNTRIESNOW;
-  };
+  return fixedBorderCountries;
+};
 
-  if (process.env.NODE_ENV === 'development') {
-    import('dotenv').then(dotenv => {
-      dotenv.config();
-      setEnvValues();
-    });
-  } else {
-    setEnvValues();
-  }
-
-  return { PORT, BASE_URL_NAGER, BASE_URL_COUNTRIESNOW };
-}
-
-export function compareNames(a, b) {
-  if (a.name < b.name) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
-
-export function changeKeysInBorderCountries(borders) {
-  const borderCountries = borders.map(country => {
-    const { commonName, countryCode } = country;
-    return { name: commonName, countryCode };
-  });
-
-  return borderCountries;
-}
-
-export function fixNamesMismatch(name) {
-  const correcpondingNames = [
-    { name: 'Bahamas', correcpondingName: 'Bahamas, The' },
-    { name: 'Czechia', correcpondingName: 'Czech Republic' },
-    { name: 'Russia', correcpondingName: 'Russian Federation' },
-    { name: 'Egypt', correcpondingName: 'Egypt, Arab Rep.' },
-    { name: 'Gambia', correcpondingName: 'Gambia, The' },
-    { name: 'Hong Kong', correcpondingName: 'Hong Kong SAR, China' },
-    { name: 'South Korea', correcpondingName: 'Korea, Dem. People’s Rep.' },
-    { name: 'Slovakia', correcpondingName: 'Slovak Republic' },
-    { name: 'Venezuela', correcpondingName: 'Venezuela, RB' },
+// Fn to fix mismatches of country names between 2 sources:
+export const fixNamesMismatch = name => {
+  const correspondingNames = [
+    { name: 'Bahamas', correspondingName: 'Bahamas, The' },
+    { name: 'Czechia', correspondingName: 'Czech Republic' },
+    { name: 'Russia', correspondingName: 'Russian Federation' },
+    { name: 'Egypt', correspondingName: 'Egypt, Arab Rep.' },
+    { name: 'Gambia', correspondingName: 'Gambia, The' },
+    { name: 'Hong Kong', correspondingName: 'Hong Kong SAR, China' },
+    { name: 'South Korea', correspondingName: 'Korea, Dem. People’s Rep.' },
+    { name: 'Slovakia', correspondingName: 'Slovak Republic' },
+    { name: 'Venezuela', correspondingName: 'Venezuela, RB' },
   ];
 
-  const match = correcpondingNames.find(item => item.name === name);
+  const match = correspondingNames.find(item => item.name === name);
 
-  return match ? match.correcpondingName : name;
-}
+  return match ? match.correspondingName : name;
+};
